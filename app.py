@@ -1,6 +1,16 @@
+import os
+import subprocess
+import sys
+
+# ESTO DEBE IR ANTES QUE CUALQUIER OTRO IMPORT
+try:
+    import plotly.express as px
+except ImportError:
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "plotly"])
+    import plotly.express as px
+
 import streamlit as st
 import pandas as pd
-import plotly.express as px
 from datetime import datetime
 
 # Configuración de página
@@ -116,4 +126,5 @@ elif menu == "Añadir Registro":
             nuevo = pd.DataFrame([[fecha, tipo, cat, monto, nota]], columns=df.columns)
             st.session_state.movimientos = pd.concat([st.session_state.movimientos, nuevo], ignore_index=True)
             st.balloons() # Animación tecnológica de éxito
+
             st.success("Guardado correctamente")
